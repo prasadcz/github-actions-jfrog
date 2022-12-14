@@ -54,7 +54,7 @@ jobs:
       #run: jf --version
       - name: Pushing the built artifact to Jfrog repository
         run: |
-             jf rt upload cz-springboot-welcome.jar maven-demo --url=${{secrets.JF_URL}}/artifactory/ --user=${{ secrets.JF_USER }} --password=${{ secrets.JF_PASSWORD }}
+             jf rt upload springboot-welcome.jar maven-demo --url=${{secrets.JF_URL}}/artifactory/ --user=${{ secrets.JF_USER }} --password=${{ secrets.JF_PASSWORD }}
              jf rt build-publish gitaction --buildname=$BUILD_NUMBER --url=${{secrets.JF_URL}}/artifactory/ --user=${{ secrets.JF_USER }} --password=${{ secrets.JF_PASSWORD }}
              jf rt bs gitaction --buildname=$BUILD_NUMBER --url=${{secrets.JF_URL}}/artifactory/ --user=${{ secrets.JF_USER }} --password=${{ secrets.JF_PASSWORD }} --fail=false
       - name: Step:6 Build & Push Docker image to JFrog-Artifact repo
