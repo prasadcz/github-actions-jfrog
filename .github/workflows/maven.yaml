@@ -54,11 +54,11 @@ jobs:
       #run: jf --version
       - name: Pushing the built artifact to Jfrog repository
         run: |
-             jf rt upload cz-springboot-welcome.jar maven-demo --url=https://cloudzenix.jfrog.io/artifactory/ --user=${{ secrets.JF_USER }} --password=${{ secrets.JF_PASSWORD }}
-             jf rt build-publish gitaction --buildname=$BUILD_NUMBER --url=https://cloudzenix.jfrog.io/artifactory/ --user=${{ secrets.JF_USER }} --password=${{ secrets.JF_PASSWORD }}
-             jf rt bs gitaction --buildname=$BUILD_NUMBER --url=https://cloudzenix.jfrog.io/artifactory/ --user=${{ secrets.JF_USER }} --password=${{ secrets.JF_PASSWORD }} --fail=false
+             jf rt upload cz-springboot-welcome.jar maven-demo --url=${{secrets.JF_URL}}/artifactory/ --user=${{ secrets.JF_USER }} --password=${{ secrets.JF_PASSWORD }}
+             jf rt build-publish gitaction --buildname=$BUILD_NUMBER --url=${{secrets.JF_URL}}/artifactory/ --user=${{ secrets.JF_USER }} --password=${{ secrets.JF_PASSWORD }}
+             jf rt bs gitaction --buildname=$BUILD_NUMBER --url=${{secrets.JF_URL}}/artifactory/ --user=${{ secrets.JF_USER }} --password=${{ secrets.JF_PASSWORD }} --fail=false
       - name: Step:6 Build & Push Docker image to JFrog-Artifact repo
         run: |
-          docker login -u${{ secrets.DOCKER_USERNAME }} -p${{ secrets.JF_PASSWORD }} cloudzenix.jfrog.io
-          docker build -t cloudzenix.jfrog.io/docker-repo/cz-springboot-welcome:latest1 .
-          docker push cloudzenix.jfrog.io/docker-repo/cz-springboot-welcome:latest1
+          docker login -u${{ secrets.JF_USER }} -p${{ secrets.JF_PASSWORD }} mskcc.jfrog.io
+          docker build -t mskcc.jfrog.io/sandbox-docker-local/springboot-welcome:$BUILD_NUMBER .
+          docker push mskcc.jfrog.io/sandbox-docker-local/springboot-welcome:$BUILD_NUMBER
