@@ -37,9 +37,9 @@ pipeline {
          stage('Buildpackage'){
             steps {
                 sh "mvn clean package"
-                sh "cp /var/lib/jenkins/workspace/dev-cz-poc-Ongoing/'Jenkins Springboot _App_Sonar scan'/target/spring-boot-mongo-1.3.jar /var/lib/jenkins/workspace/dev-cz-poc-Ongoing/'Jenkins Springboot _App_Sonar scan'"
-                sh "cd /var/lib/jenkins/workspace/dev-cz-poc-Ongoing/'Jenkins Springboot _App_Sonar scan'/target/"   
-                sh "jf rt upload 'spring-boot-mongo-1.3.jar' maven-demo --url=https://cloudzenix.jfrog.io/artifactory/ --user=renuka.prasad@cloudzenix.com --password=Prasad@123"
+                sh "cp /var/lib/jenkins/workspace/pipeline-jfrog-sonar/target/springboot-welcome.jar /var/lib/jenkins/workspace/pipeline-jfrog-sonar"
+                //sh "cd /var/lib/jenkins/workspace/'Jenkins Springboot _App_Sonar scan'/target/"   
+                sh "jf rt upload 'springboot-welcome.jar' sandbox-maven-local --url=https://mskcc.jfrog.io/artifactory/ --user=korvic@mskcc.org --password=credentials('Jfrog')"
             }    
          }
          
