@@ -1,0 +1,101 @@
+pipeline {
+    agent any
+    tools {
+        maven 'maven3.8.5'
+       
+    }
+    stages {
+    
+        stage('Cleanup Workspace'){
+            steps {
+               println "${env.BRANCH_NAME}"
+               cleanWs()
+               //clean up temp directory
+               dir("${env.WORKSPACE}@tmp") {
+                     deleteDir()
+               }
+               //clean up script directory
+               dir("${env.WORKSPACE}@script") {
+                     deleteDir()
+               }
+               dir("${env.WORKSPACE}@script@tmp") {
+                     deleteDir()
+               }
+               step([$class: 'WsCleanup']) 
+               }
+               }
+               
+             stage('checkout code'){
+            steps {
+               
+               checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[credentialsId: 'githubjfrog', url: 'https://github.com/cloudzenix-anand/github-actions-Multi-Jobs.git']]])
+               }
+               }
+               
+              
+         stage('Buildpackage'){
+            steps {
+                sh "mvn clean package"
+                sh "cp /var/lib/jenkins/workspace/dev-cz-poc-Ongoing/'Jenkins Springboot _App_Sonar scan'/target/spring-boot-mongo-1.3.jar /var/lib/jenkins/workspace/dev-cz-poc-Ongoing/'Jenkins Springboot _App_Sonar scan'"
+                sh "cd /var/lib/jenkins/workspace/dev-cz-poc-Ongoing/'Jenkins Springboot _App_Sonar scan'/target/"   
+                sh "jf rt upload 'spring-boot-mongo-1.3.jar' maven-demo --url=https://cloudzenix.jfrog.io/artifactory/ --user=renuka.prasad@cloudzenix.com --password=Prasad@123"
+            }    
+         }
+         
+                  
+         stage('Build and push image'){
+           steps{
+               sh "docker build -t cloudzenix.jfrog.io/docker-repo/cz-springboot-welcome:${env.BUILD_NUMBER} ."
+               sh "docker login -u renuka.prasad@cloudzenix.com -p Prasad@123 cloudzenix.jfrog.io"
+               sh "docker push cloudzenix.jfrog.io/docker-repo/cz-springboot-welcome:${env.BUILD_NUMBER}"
+               }
+             }  
+         
+        stage('Xray'){
+            steps{
+                script {
+                    rtServer = Artifactory.newServer url: 'https://cloudzenix.jfrog.io/', username: 'renuka.prasad@cloudzenix.com' , password: 'Prasad@123'
+                    buildInfo = Artifactory.newBuildInfo()
+                }
+            }
+        }
+
+
+        stage('Configure Xray '){
+            steps{
+                rtBuildInfo (
+                    buildName: "Jenkins E2E Integration Sample_Spring_app",
+                    buildNumber: buildInfo.number,
+                    maxBuilds: 1,
+                    maxDays: 2,
+                    doNotDiscardBuilds: ["3"],
+                    deleteBuildArtifacts: true
+                )
+            }
+        }
+
+        stage('Publish'){
+            steps {
+                rtPublishBuildInfo (
+                    serverId : 'Jfrog',
+                    buildName : "Jenkins E2E Integration Sample_Spring_app",
+                    buildNumber : buildInfo.number
+                )
+            }
+        }
+
+        //Scan Build Artifacts in Xray
+        stage('Xray Scan') {
+            steps{
+                script{
+                   xrayScan (
+                        serverId :   "Jfrog",
+                        buildName    : "Jenkins E2E Integration Sample_Spring_app",
+                        buildNumber : buildInfo.number,
+                        failBuild    : true
+                    )
+                }
+            }
+        }
+    }
+}
