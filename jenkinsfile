@@ -50,16 +50,16 @@ pipeline {
                   
          stage('Build and push image'){
            steps{
-               sh "docker build -t cloudzenix.jfrog.io/docker-repo/cz-springboot-welcome:${env.BUILD_NUMBER} ."
-               sh "docker login -u renuka.prasad@cloudzenix.com -p Prasad@123 cloudzenix.jfrog.io"
-               sh "docker push cloudzenix.jfrog.io/docker-repo/cz-springboot-welcome:${env.BUILD_NUMBER}"
+               sh "docker build -t mskcc.jfrog.io/sandbox-docker-local/springboot-welcome:${env.BUILD_NUMBER} ."
+               sh "docker login -u korvic@mskcc.org -p ${password} mskcc.jfrog.io"
+               sh "docker push mskcc.jfrog.io/sandbox-docker-local/springboot-welcome:${env.BUILD_NUMBER}"
                }
              }  
          
         stage('Xray'){
             steps{
                 script {
-                    rtServer = Artifactory.newServer url: 'https://cloudzenix.jfrog.io/', username: 'renuka.prasad@cloudzenix.com' , password: 'Prasad@123'
+                    rtServer = Artifactory.newServer url: 'https://mskcc.jfrog.io/', username: 'korvic@mskccc.org' , password:${password}
                     buildInfo = Artifactory.newBuildInfo()
                 }
             }
@@ -69,7 +69,7 @@ pipeline {
         stage('Configure Xray '){
             steps{
                 rtBuildInfo (
-                    buildName: "Jenkins E2E Integration Sample_Spring_app",
+                    buildName: "jenkins-jfrog-sonar",
                     buildNumber: buildInfo.number,
                     maxBuilds: 1,
                     maxDays: 2,
@@ -83,7 +83,7 @@ pipeline {
             steps {
                 rtPublishBuildInfo (
                     serverId : 'Jfrog',
-                    buildName : "Jenkins E2E Integration Sample_Spring_app",
+                    buildName : "jenkins-jfrog-sonar",
                     buildNumber : buildInfo.number
                 )
             }
@@ -95,7 +95,7 @@ pipeline {
                 script{
                    xrayScan (
                         serverId :   "Jfrog",
-                        buildName    : "Jenkins E2E Integration Sample_Spring_app",
+                        buildName    : "jenkins-jfrog-sonar",
                         buildNumber : buildInfo.number,
                         failBuild    : true
                     )
