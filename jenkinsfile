@@ -28,7 +28,7 @@ pipeline {
              stage('checkout code'){
             steps {
                
-               checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[credentialsId: 'githubjfrog', url: 'https://github.com/cloudzenix-anand/github-actions-Multi-Jobs.git']]])
+               //checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[credentialsId: 'githubjfrog', url: 'https://github.com/cloudzenix-anand/github-actions-Multi-Jobs.git']]])
                }
                }
                
