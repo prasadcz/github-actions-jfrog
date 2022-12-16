@@ -38,7 +38,7 @@ pipeline {
             steps {
                 sh "mvn clean package"
                 sh "cp /var/lib/jenkins/workspace/pipeline-jfrog-sonar/target/springboot-welcome.jar /var/lib/jenkins/workspace/pipeline-jfrog-sonar"
-                sh "jf rt upload 'springboot-welcome.jar' sandbox-maven-local --url=https://mskcc.jfrog.io/artifactory/ --user=korvic@mskcc.org --password=credentials('Jfrog')"
+                sh "jf rt upload 'springboot-welcome.jar' sandbox-maven-local --url=https://mskcc.jfrog.io/artifactory/ --user=korvic@mskcc.org --password=xyz"
             }    
          }
          
