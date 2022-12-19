@@ -67,9 +67,10 @@ pipeline {
         } */
 
 
-      /*  stage('Configure Xray '){
+        stage('Configure BuildInfo '){
             steps{
-                rtBuildInfo (
+               buildInfo = Artifactory.newBuildInfo()
+              rtBuildInfo (
                     buildName: "jenkins-jfrog-sonar",
                     buildNumber: buildInfo.number,
                     maxBuilds: 1,
@@ -78,7 +79,7 @@ pipeline {
                     deleteBuildArtifacts: true
                 )
             }
-        }*/
+        }
 
         stage('Publish Jenkins Buildinfo to Jfrog'){
             steps {
