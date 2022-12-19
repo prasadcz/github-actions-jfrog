@@ -48,13 +48,13 @@ pipeline {
          }
          
                   
-         stage('Build and push image'){
-           steps{
-               sh "docker build -t mskcc.jfrog.io/sandbox-docker1-local/springboot-welcome:${env.BUILD_NUMBER} ."
-               sh "docker login -u korvic@mskcc.org -p ${password} mskcc.jfrog.io"
-               sh "docker push mskcc.jfrog.io/sandbox-docker1-local/springboot-welcome:${env.BUILD_NUMBER}"
-               }
-             }  
+       //  stage('Build and push image'){
+           //steps{
+               //sh "docker build -t mskcc.jfrog.io/sandbox-docker1-local/springboot-welcome:${env.BUILD_NUMBER} ."
+               //sh "docker login -u korvic@mskcc.org -p ${password} mskcc.jfrog.io"
+              // sh "docker push mskcc.jfrog.io/sandbox-docker1-local/springboot-welcome:${env.BUILD_NUMBER}"
+            //   }
+           //  }  
          
         stage('Xray'){
             steps{
