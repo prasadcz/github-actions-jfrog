@@ -60,7 +60,7 @@ pipeline {
             steps{
                 script {
                   //  rtServer = Artifactory.newServer url: 'https://mskcc.jfrog.io/', username: 'korvic@mskccc.org' , password:${password}
-                 rtServer = Artifactory.newServer url: 'https://cloudzenix.jfrog.io/', username: 'renuka.prasad@cloudzenix.com' , password: 'Prasad@123' 
+                 //rtServer = Artifactory.newServer url: 'https://cloudzenix.jfrog.io/', username: 'renuka.prasad@cloudzenix.com' , password: 'Prasad@123' 
                   buildInfo = Artifactory.newBuildInfo()
                 }
             }
