@@ -37,7 +37,22 @@ pipeline {
               checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'gh-token', url: 'https://github.com/ckrorg/gh-actions-jfrog.git']]])
                }
                }
-               
+         
+         
+         stage('Sonar'){
+
+            steps{
+
+                withSonarQubeEnv('SonarCube'){
+
+                sh"mvn sonar:sonar"
+
+                                            }
+
+                 }
+
+            }
+         
               
          stage('Build & Upload Artifact (Jar)'){
             steps {
