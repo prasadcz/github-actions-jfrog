@@ -72,13 +72,7 @@ pipeline {
                waitForQualityGate abortPipeline: true
                }
                }
-            
- 
-
-    
-         
-              
-         stage('Build & Upload Artifact (Jar)'){
+        stage('Build & Upload Artifact (Jar)'){
             steps {
                 sh "mvn clean package"
                 sh "cp /var/lib/jenkins/workspace/pipeline-jfrog-sonar/target/springboot-welcome.jar /var/lib/jenkins/workspace/pipeline-jfrog-sonar"
