@@ -37,15 +37,22 @@ pipeline {
               checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'gh-token', url: 'https://github.com/ckrorg/gh-actions-jfrog.git']]])
                }
                }
-        stage('snyk'){
+        
+        /*stage('snyk'){
              steps {
                    snykSecurity(
                      snykInstallation: 'snyk',
                      snykTokenId: 'snyk'
                      )
                     } 
-               }
-
+               }*/
+               
+        stage('snyk') {
+             steps {
+                    snykSecurity(
+                    snykInstallation: 'snyk',snykTokenId: 'snyk')
+                    }
+                    }
 
          
          stage('Sonar'){
