@@ -38,14 +38,6 @@ pipeline {
                }
                }
         
-        /*stage('snyk'){
-             steps {
-                   snykSecurity(
-                     snykInstallation: 'snyk',
-                     snykTokenId: 'snyk'
-                     )
-                    } 
-               }*/
                
         stage('snyk') {
              steps {
