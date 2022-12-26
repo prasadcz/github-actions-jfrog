@@ -38,7 +38,7 @@ pipeline {
                }
                }
         stage('snyk'){
-                 steps{
+             steps {
                    snykSecurity(
                      snykInstallation: 'snyk',
                      snykTokenId: 'snyk'
