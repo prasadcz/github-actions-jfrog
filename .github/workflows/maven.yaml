@@ -10,7 +10,7 @@ on:
     branches: [ main ]
 
 jobs:
- Sonar-Scan:
+  Sonar-Scan:
     runs-on: ubuntu-latest
     
     steps:
@@ -29,7 +29,7 @@ jobs:
             # mandatory
             -Dsonar.projectKey=ckorg_gh-actions-jfrog
             -Dsonar.organization=ckorg
- build-code: 
+  build-code: 
   
     runs-on: ubuntu-latest 
 
