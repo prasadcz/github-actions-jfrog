@@ -92,7 +92,7 @@ pipeline {
                //sh "docker build -t mskcc.jfrog.io/sandbox-docker1-local/springboot-welcome:${env.BUILD_NUMBER} ."
                sh "docker login -u korvic@mskcc.org -p ${password} mskcc.jfrog.io"
                sh "docker pull mskcc.jfrog.io/sandbox-docker1-local/springboot-welcome:${env.BUILD_NUMBER}"
-               sh "docker run -itd --ulimit nofile=122880:122880 mskcc.jfrog.io/sandbox-docker1-local/springboot-welcome:${env.BUILD_NUMBER} -p 8080:3000"
+               sh "docker run -itd --ulimit nofile=122880:122880 -p 3000:8080 mskcc.jfrog.io/sandbox-docker1-local/springboot-welcome:${env.BUILD_NUMBER} "
             }
              }    
       
