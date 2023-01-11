@@ -111,6 +111,7 @@ jobs:
       - name: Deploy to Target VM 
         uses: up9cloud/action-rsync@master
         env:
-          SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
-          REMOTE_HOST: ${{ secrets.HOST_DNS }}
           REMOTE_USER: ${{ secrets.USERNAME }}
+          HOST: ${{ secrets.HOST_DNS }}
+          KEY: ${{secrets.EC2_SSH_KEY}}
+          
