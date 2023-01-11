@@ -109,7 +109,7 @@ jobs:
           docker push mskcc.jfrog.io/sandbox-docker-local/springboot-welcome:$BUILD_NUMBER
           
       - name: Deploy to Target VM 
-        uses: easingthemes/ssh-deploy@main
+        uses: up9cloud/action-rsync@master
         env:
           SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
           REMOTE_HOST: ${{ secrets.HOST_DNS }}
