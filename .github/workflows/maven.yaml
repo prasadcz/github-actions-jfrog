@@ -114,4 +114,5 @@ jobs:
           REMOTE_USER: ${{ secrets.USERNAME }}
           HOST: ${{ secrets.HOST_DNS }}
           KEY: ${{secrets.EC2_SSH_KEY}}
+          TARGET: /app/
           
