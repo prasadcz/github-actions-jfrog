@@ -49,10 +49,11 @@ pipeline {
          stage('Sonar'){
 
             steps{
-
+                sh "mvn clean package"
                 withSonarQubeEnv('SonarCube'){
 
                 sh"mvn sonar:sonar"
+                
 
                                             }
 
